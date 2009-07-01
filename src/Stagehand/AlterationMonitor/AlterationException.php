@@ -35,6 +35,8 @@
  * @since      File available since Release 1.0.0
  */
 
+require_once 'Stagehand/AlterationMonitor/Exception.php';
+
 // {{{ Stagehand_AlterationMonitor_AlterationException
 
 /**
