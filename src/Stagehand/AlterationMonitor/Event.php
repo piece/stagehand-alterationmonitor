@@ -87,17 +87,6 @@ class Stagehand_AlterationMonitor_Event
         $this->code = $code;
     }
 
-    // }}}
-    // {{{ addEvent()
-
-    /**
-     * @param integer $code
-     */
-    public function addEvent($code)
-    {
-        $this->code |= $code;
-    }
-
     /**#@-*/
 
     /**#@+
