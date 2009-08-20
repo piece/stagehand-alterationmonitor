@@ -35,11 +35,6 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'Stagehand/DirectoryScanner.php';
-require_once 'Stagehand/AlterationMonitor/Exception.php';
-require_once 'Stagehand/AlterationMonitor/AlterationException.php';
-require_once 'Stagehand/AlterationMonitor/Event.php';
-
 // {{{ Stagehand_AlterationMonitor
 
 /**
