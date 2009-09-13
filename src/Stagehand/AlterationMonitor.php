@@ -38,7 +38,7 @@
 // {{{ Stagehand_AlterationMonitor
 
 /**
- * The file and directory alteration monitor.
+ * A file and directory alteration monitor.
  *
  * @package    Stagehand_AlterationMonitor
  * @copyright  2009 KUBO Atsuhiro <kubo@iteman.jp>
