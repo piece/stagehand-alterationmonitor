@@ -75,15 +75,15 @@ class Stagehand_AlterationMonitor
      * @access private
      */
 
-    private $directories;
-    private $callback;
-    private $invokesCallbackForEachFile;
-    private $scanInterval = self::SCAN_INTERVAL_MIN;
-    private $directoryScanner;
-    private $isFirstTime = true;
-    private $currentElements = array();
-    private $previousElements = array();
-    private $eventQueue = array();
+    protected $directories;
+    protected $callback;
+    protected $invokesCallbackForEachFile;
+    protected $scanInterval = self::SCAN_INTERVAL_MIN;
+    protected $directoryScanner;
+    protected $isFirstTime = true;
+    protected $currentElements = array();
+    protected $previousElements = array();
+    protected $eventQueue = array();
 
     /**#@-*/
 
@@ -212,12 +212,6 @@ class Stagehand_AlterationMonitor
      * @access protected
      */
 
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
     // }}}
     // {{{ waitForChanges()
 
@@ -225,7 +219,7 @@ class Stagehand_AlterationMonitor
      * Watches for changes in the target directories and returns immediately when
      * changes are detected.
      */
-    private function waitForChanges()
+    protected function waitForChanges()
     {
         try {
             while (true) {
@@ -271,7 +265,7 @@ class Stagehand_AlterationMonitor
      * @param integer $event
      * @throws Stagehand_AlterationMonitor_AlterationException
      */
-    private function addEvent($file, $event)
+    protected function addEvent($file, $event)
     {
         $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($file, $event);
         if ($this->invokesCallbackForEachFile) {
@@ -284,7 +278,7 @@ class Stagehand_AlterationMonitor
 
     /**
      */
-    private function clearEventQueue()
+    protected function clearEventQueue()
     {
         $this->eventQueue = array();
     }
@@ -295,7 +289,7 @@ class Stagehand_AlterationMonitor
     /**
      * @param Stagehand_AlterationMonitor_Event $event
      */
-    private function invokeCallback($event = null)
+    protected function invokeCallback($event = null)
     {
         if (is_null($event)) {
             call_user_func($this->callback);
@@ -303,6 +297,12 @@ class Stagehand_AlterationMonitor
             call_user_func($this->callback, $event);
         }
     }
+
+    /**#@-*/
+
+    /**#@+
+     * @access private
+     */
 
     /**#@-*/
 

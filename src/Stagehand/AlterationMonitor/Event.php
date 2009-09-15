@@ -65,8 +65,8 @@ class Stagehand_AlterationMonitor_Event
      * @access private
      */
 
-    private $file;
-    private $code;
+    protected $file;
+    protected $code;
 
     /**#@-*/
 
