@@ -121,13 +121,14 @@ class Stagehand_AlterationMonitor
             $this->waitForChanges();
 
             if (!$this->invokesCallbackForEachFile) {
-                $this->invokeCallback();
-                $this->clearEventQueue();
+                call_user_func($this->callback, $this->eventQueue);
             } else {
-                while (count($this->eventQueue)) {
-                    $this->invokeCallback(array_shift($this->eventQueue));
+                foreach ($this->eventQueue as $event) {
+                    call_user_func($this->callback, $this->event);
                 }
             }
+
+            $this->eventQueue = array();
         }
     }
 
@@ -276,31 +277,6 @@ class Stagehand_AlterationMonitor
         $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($file, $event);
         if ($this->invokesCallbackForEachFile) {
             throw new Stagehand_AlterationMonitor_AlterationException();
-        }
-    }
-
-    // }}}
-    // {{{ clearEventQueue()
-
-    /**
-     */
-    protected function clearEventQueue()
-    {
-        $this->eventQueue = array();
-    }
-
-    // }}}
-    // {{{ invokeCallback()
-
-    /**
-     * @param Stagehand_AlterationMonitor_Event $event
-     */
-    protected function invokeCallback($event = null)
-    {
-        if (is_null($event)) {
-            call_user_func($this->callback);
-        } else {
-            call_user_func($this->callback, $event);
         }
     }
 
