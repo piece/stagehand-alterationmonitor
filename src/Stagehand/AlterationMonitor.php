@@ -119,16 +119,7 @@ class Stagehand_AlterationMonitor
     {
         while (true) {
             $this->waitForChanges();
-
-            if (!$this->invokesCallbackForEachFile) {
-                call_user_func($this->callback, $this->eventQueue);
-            } else {
-                foreach ($this->eventQueue as $event) {
-                    call_user_func($this->callback, $this->event);
-                }
-            }
-
-            $this->eventQueue = array();
+            $this->invokeCallback();
         }
     }
 
@@ -278,6 +269,24 @@ class Stagehand_AlterationMonitor
         if ($this->invokesCallbackForEachFile) {
             throw new Stagehand_AlterationMonitor_AlterationException();
         }
+    }
+
+    // }}}
+    // {{{ invokeCallback()
+
+    /**
+     */
+    protected function invokeCallback()
+    {
+        if (!$this->invokesCallbackForEachFile) {
+            call_user_func($this->callback, $this->eventQueue);
+        } else {
+            foreach ($this->eventQueue as $event) {
+                call_user_func($this->callback, $event);
+            }
+        }
+
+        $this->eventQueue = array();
     }
 
     /**#@-*/
