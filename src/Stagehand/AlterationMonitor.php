@@ -255,14 +255,10 @@ class Stagehand_AlterationMonitor
     /**
      * @param string  $file
      * @param integer $event
-     * @throws Stagehand_AlterationMonitor_AlterationException
      */
     protected function addEvent($file, $event)
     {
         $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($file, $event);
-        if ($this->invokesCallbackForEachFile) {
-            throw new Stagehand_AlterationMonitor_AlterationException();
-        }
     }
 
     // }}}
