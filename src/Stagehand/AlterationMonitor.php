@@ -99,13 +99,11 @@ class Stagehand_AlterationMonitor
      *
      * @param array    $directories
      * @param callback $callback
-     * @param booealn  $invokesCallbackForEachFile
      */
     public function __construct($directories, $callback)
     {
         $this->directories = $directories;
         $this->callback = $callback;
-        $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
         $this->directoryScanner =
             new Stagehand_DirectoryScanner(array($this, 'detectChanges'));
     }
