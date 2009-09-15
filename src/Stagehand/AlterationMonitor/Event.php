@@ -87,6 +87,28 @@ class Stagehand_AlterationMonitor_Event
         $this->code = $code;
     }
 
+    // }}}
+    // {{{ getFile()
+
+    /**
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    // }}}
+    // {{{ getCode()
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
     /**#@-*/
 
     /**#@+
