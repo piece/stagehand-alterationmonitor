@@ -77,7 +77,7 @@ class Stagehand_AlterationMonitor
 
     protected $directories;
     protected $callback;
-    protected $invokesCallbackForEachFile = false;
+    protected $invokesCallbackForEachFile;
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
     protected $directoryScanner;
     protected $isFirstTime = true;
@@ -99,11 +99,16 @@ class Stagehand_AlterationMonitor
      *
      * @param array    $directories
      * @param callback $callback
+     * @param boolean  $invokesCallbackForEachFile
      */
-    public function __construct($directories, $callback)
+    public function __construct($directories,
+                                $callback,
+                                $invokesCallbackForEachFile = false
+                                )
     {
         $this->directories = $directories;
         $this->callback = $callback;
+        $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
         $this->directoryScanner =
             new Stagehand_DirectoryScanner(array($this, 'detectChanges'));
     }
@@ -191,17 +196,6 @@ class Stagehand_AlterationMonitor
             $this->addEvent($file, self::EVENT_CHANGED);
             return;
         }
-    }
-
-    // }}}
-    // {{{ setInvokesCallbackForEachFile()
-
-    /**
-     * @param booealn $invokesCallbackForEachFile
-     */
-    public function setInvokesCallbackForEachFile($invokesCallbackForEachFile)
-    {
-        $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
     }
 
     /**#@-*/
