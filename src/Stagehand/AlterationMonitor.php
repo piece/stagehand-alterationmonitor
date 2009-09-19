@@ -258,7 +258,7 @@ class Stagehand_AlterationMonitor
      */
     protected function addEvent($file, $event)
     {
-        $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($file, $event);
+        $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($event, $file);
     }
 
     // }}}
