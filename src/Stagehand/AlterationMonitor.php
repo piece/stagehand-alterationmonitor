@@ -168,18 +168,18 @@ class Stagehand_AlterationMonitor
         }
 
         if (!array_key_exists($file, $this->previousElements)) {
-            $this->addEvent($file, self::EVENT_CREATED);
+            $this->addEvent(self::EVENT_CREATED, $file);
             return;
         }
 
         $isDirectory = is_dir($file);
         if ($this->currentElements[$file]['isDirectory'] != $isDirectory) {
-            $this->addEvent($file, self::EVENT_CHANGED);
+            $this->addEvent(self::EVENT_CHANGED, $file);
             return;
         }
 
         if ($this->previousElements[$file]['perms'] != $perms) {
-            $this->addEvent($file, self::EVENT_CHANGED);
+            $this->addEvent(self::EVENT_CHANGED, $file);
             return;
         }
 
@@ -193,7 +193,7 @@ class Stagehand_AlterationMonitor
         }
 
         if ($this->previousElements[$file]['mtime'] != $mtime) {
-            $this->addEvent($file, self::EVENT_CHANGED);
+            $this->addEvent(self::EVENT_CHANGED, $file);
             return;
         }
     }
@@ -232,7 +232,7 @@ class Stagehand_AlterationMonitor
                     reset($this->previousElements);
                     while (list($file, $stat) = each($this->previousElements)) {
                         if (!array_key_exists($file, $this->currentElements)) {
-                            $this->addEvent($file, self::EVENT_REMOVED);
+                            $this->addEvent(self::EVENT_REMOVED, $file);
                         }
                     }
                 }
@@ -253,10 +253,10 @@ class Stagehand_AlterationMonitor
     // {{{ addEvent()
 
     /**
-     * @param string  $file
      * @param integer $event
+     * @param string  $file
      */
-    protected function addEvent($file, $event)
+    protected function addEvent($event, $file)
     {
         $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($event, $file);
     }
