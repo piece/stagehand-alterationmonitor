@@ -78,10 +78,10 @@ class Stagehand_AlterationMonitor_Event
     // {{{ __construct()
 
     /**
-     * @param string  $file
      * @param integer $code
+     * @param string  $file
      */
-    public function __construct($file, $code)
+    public function __construct($code, $file)
     {
         $this->file = $file;
         $this->code = $code;
