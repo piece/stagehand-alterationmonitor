@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -13,10 +13,10 @@
   <email>kubo@iteman.jp</email>
   <active>yes</active>
  </lead>
- <date>2009-09-19</date>
- <time>11:09:40</time>
+ <date>2010-09-10</date>
+ <time>22:14:29</time>
  <version>
-  <release>1.0.0</release>
+  <release>1.1.0</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -25,34 +25,16 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-The first release of Stagehand_AlterationMonitor.
+The features of Stagehand_AlterationMonitor 1.1.0 is the same as Stagehand_AlterationMonitor 1.0.0 except the version number and the directory structure. As of this version, the sources are located directly under the &quot;php_dir&quot; (PEAR directory).
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <dir name="doc">
-    <file name="LICENSE" role="doc">
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
-   </dir> <!-- /doc -->
-   <dir name="src">
-    <dir name="Stagehand">
-     <dir name="AlterationMonitor">
-      <file name="AlterationException.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file name="Event.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file name="Exception.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-     </dir> <!-- /src/Stagehand/AlterationMonitor -->
-     <file name="AlterationMonitor.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-    </dir> <!-- /src/Stagehand -->
-   </dir> <!-- /src -->
-  </dir> <!-- / -->
+   <file baseinstalldir="/" md5sum="58e136c57c700bf1055c7d67caf9656a" name="doc/LICENSE" role="doc" />
+   <file baseinstalldir="/" md5sum="a2472b9dc7e46e584686d76bf02a823b" name="Stagehand/AlterationMonitor.php" role="php" />
+   <file baseinstalldir="/" md5sum="7f9284696ea6ca9a041496fb97a36a23" name="Stagehand/AlterationMonitor/AlterationException.php" role="php" />
+   <file baseinstalldir="/" md5sum="db682f79efb05171bfce790e177822bf" name="Stagehand/AlterationMonitor/Event.php" role="php" />
+   <file baseinstalldir="/" md5sum="7fa3fed40ad6e49787cd9d21bc31b095" name="Stagehand/AlterationMonitor/Exception.php" role="php" />
+  </dir>
  </contents>
  <dependencies>
   <required>
@@ -89,6 +71,21 @@ The first release of Stagehand_AlterationMonitor.
    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
    <notes>
 The first release of Stagehand_AlterationMonitor.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-09-10</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+The features of Stagehand_AlterationMonitor 1.1.0 is the same as Stagehand_AlterationMonitor 1.0.0 except the version number and the directory structure. As of this version, the sources are located directly under the &quot;php_dir&quot; (PEAR directory).
    </notes>
   </release>
  </changelog>
