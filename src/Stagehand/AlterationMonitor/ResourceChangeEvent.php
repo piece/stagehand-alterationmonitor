@@ -44,7 +44,7 @@ namespace Stagehand\AlterationMonitor;
  * @version    Release: @package_version@
  * @since      Class available since Release 1.0.0
  */
-class Event
+class ResourceChangeEvent
 {
     protected $file;
     protected $code;

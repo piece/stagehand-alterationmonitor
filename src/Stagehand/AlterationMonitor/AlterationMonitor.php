@@ -205,7 +205,7 @@ class AlterationMonitor
      */
     protected function addEvent($event, $file)
     {
-        $this->eventQueue[] = new Event($event, $file);
+        $this->eventQueue[] = new ResourceChangeEvent($event, $file);
     }
 
     /**
