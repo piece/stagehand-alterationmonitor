@@ -48,32 +48,10 @@ namespace Stagehand\AlterationMonitor;
  */
 class AlterationMonitor
 {
-
-    // {{{ constants
-
     const SCAN_INTERVAL_MIN = 5;
     const EVENT_CREATED = 1;
     const EVENT_CHANGED = 2;
     const EVENT_REMOVED = 4;
-
-    // }}}
-    // {{{ properties
-
-    /**#@+
-     * @access public
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access protected
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
 
     protected $directories;
     protected $callback;
@@ -84,15 +62,6 @@ class AlterationMonitor
     protected $currentElements = array();
     protected $previousElements = array();
     protected $eventQueue = array();
-
-    /**#@-*/
-
-    /**#@+
-     * @access public
-     */
-
-    // }}}
-    // {{{ __construct()
 
     /**
      * Sets one or more target directories and a callback to the properties.
@@ -113,9 +82,6 @@ class AlterationMonitor
             new \Stagehand_DirectoryScanner(array($this, 'detectChanges'));
     }
 
-    // }}}
-    // {{{ monitor()
-
     /**
      * Watches for changes in the target directories and invokes the callback when
      * changes are detected.
@@ -127,9 +93,6 @@ class AlterationMonitor
             $this->invokeCallback();
         }
     }
-
-    // }}}
-    // {{{ detectChanges()
 
     /**
      * Detects any changes of a file or directory immediately.
@@ -198,15 +161,6 @@ class AlterationMonitor
         }
     }
 
-    /**#@-*/
-
-    /**#@+
-     * @access protected
-     */
-
-    // }}}
-    // {{{ waitForChanges()
-
     /**
      * Watches for changes in the target directories and returns immediately when
      * changes are detected.
@@ -249,9 +203,6 @@ class AlterationMonitor
         }
     }
 
-    // }}}
-    // {{{ addEvent()
-
     /**
      * @param integer $event
      * @param string  $file
@@ -260,9 +211,6 @@ class AlterationMonitor
     {
         $this->eventQueue[] = new Event($event, $file);
     }
-
-    // }}}
-    // {{{ invokeCallback()
 
     /**
      */
@@ -278,19 +226,7 @@ class AlterationMonitor
 
         $this->eventQueue = array();
     }
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
-    /**#@-*/
-
-    // }}}
 }
-
-// }}}
 
 /*
  * Local Variables:

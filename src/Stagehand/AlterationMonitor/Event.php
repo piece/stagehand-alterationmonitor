@@ -37,8 +37,6 @@
 
 namespace Stagehand\AlterationMonitor;
 
-// {{{ Stagehand_AlterationMonitor_Event
-
 /**
  * @package    Stagehand_AlterationMonitor
  * @copyright  2009, 2012 KUBO Atsuhiro <kubo@iteman.jp>
@@ -48,36 +46,8 @@ namespace Stagehand\AlterationMonitor;
  */
 class Event
 {
-
-    // {{{ properties
-
-    /**#@+
-     * @access public
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access protected
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
     protected $file;
     protected $code;
-
-    /**#@-*/
-
-    /**#@+
-     * @access public
-     */
-
-    // }}}
-    // {{{ __construct()
 
     /**
      * @param integer $code
@@ -89,9 +59,6 @@ class Event
         $this->code = $code;
     }
 
-    // }}}
-    // {{{ getFile()
-
     /**
      * @return string
      */
@@ -100,9 +67,6 @@ class Event
         return $this->file;
     }
 
-    // }}}
-    // {{{ getCode()
-
     /**
      * @return string
      */
@@ -110,25 +74,7 @@ class Event
     {
         return $this->code;
     }
-
-    /**#@-*/
-
-    /**#@+
-     * @access protected
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
-    /**#@-*/
-
-    // }}}
 }
-
-// }}}
 
 /*
  * Local Variables:

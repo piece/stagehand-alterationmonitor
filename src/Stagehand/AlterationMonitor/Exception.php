@@ -37,8 +37,6 @@
 
 namespace Stagehand\AlterationMonitor;
 
-// {{{ Stagehand_AlterationMonitor_Exception
-
 /**
  * @package    Stagehand_AlterationMonitor
  * @copyright  2009, 2012 KUBO Atsuhiro <kubo@iteman.jp>
@@ -49,8 +47,6 @@ namespace Stagehand\AlterationMonitor;
 class Exception extends \Exception
 {
 }
-
-// }}}
 
 /*
  * Local Variables:
