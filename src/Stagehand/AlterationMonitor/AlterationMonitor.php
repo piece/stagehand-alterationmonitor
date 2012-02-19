@@ -2,9 +2,9 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
 /**
- * PHP version 5
+ * PHP version 5.3
  *
- * Copyright (c) 2009 KUBO Atsuhiro <kubo@iteman.jp>,
+ * Copyright (c) 2009, 2012 KUBO Atsuhiro <kubo@iteman.jp>,
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,24 +29,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    Stagehand_AlterationMonitor
- * @copyright  2009 KUBO Atsuhiro <kubo@iteman.jp>
+ * @copyright  2009, 2012 KUBO Atsuhiro <kubo@iteman.jp>
  * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
  * @version    Release: @package_version@
  * @since      File available since Release 1.0.0
  */
 
-// {{{ Stagehand_AlterationMonitor
+namespace Stagehand\AlterationMonitor;
 
 /**
  * A file and directory alteration monitor.
  *
  * @package    Stagehand_AlterationMonitor
- * @copyright  2009 KUBO Atsuhiro <kubo@iteman.jp>
+ * @copyright  2009, 2012 KUBO Atsuhiro <kubo@iteman.jp>
  * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
  * @version    Release: @package_version@
  * @since      Class available since Release 1.0.0
  */
-class Stagehand_AlterationMonitor
+class AlterationMonitor
 {
 
     // {{{ constants
@@ -110,7 +110,7 @@ class Stagehand_AlterationMonitor
         $this->callback = $callback;
         $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
         $this->directoryScanner =
-            new Stagehand_DirectoryScanner(array($this, 'detectChanges'));
+            new \Stagehand_DirectoryScanner(array($this, 'detectChanges'));
     }
 
     // }}}
@@ -135,13 +135,13 @@ class Stagehand_AlterationMonitor
      * Detects any changes of a file or directory immediately.
      *
      * @param string $file
-     * @throws Stagehand_AlterationMonitor_Exception
+     * @throws \Stagehand\AlterationMonitor\Exception
      */
     public function detectChanges($file)
     {
         $perms = fileperms($file);
         if ($perms === false) {
-            throw new Stagehand_AlterationMonitor_Exception();
+            throw new Exception();
         }
 
         $this->currentElements[$file] = array('perms' => $perms,
@@ -152,7 +152,7 @@ class Stagehand_AlterationMonitor
         if (!$this->currentElements[$file]['isDirectory']) {
             $mtime = filemtime($file);
             if ($mtime === false) {
-                throw new Stagehand_AlterationMonitor_Exception();
+                throw new Exception();
             }
 
             $this->currentElements[$file]['mtime'] = $mtime;
@@ -164,7 +164,7 @@ class Stagehand_AlterationMonitor
 
         $perms = fileperms($file);
         if ($perms === false) {
-            throw new Stagehand_AlterationMonitor_Exception();
+            throw new Exception();
         }
 
         if (!array_key_exists($file, $this->previousElements)) {
@@ -189,7 +189,7 @@ class Stagehand_AlterationMonitor
 
         $mtime = filemtime($file);
         if ($mtime === false) {
-            throw new Stagehand_AlterationMonitor_Exception();
+            throw new Exception();
         }
 
         if ($this->previousElements[$file]['mtime'] != $mtime) {
@@ -242,10 +242,10 @@ class Stagehand_AlterationMonitor
                 $this->isFirstTime = false;
 
                 if (count($this->eventQueue)) {
-                    throw new Stagehand_AlterationMonitor_AlterationException();
+                    throw new AlterationException();
                 }
             }
-        } catch (Stagehand_AlterationMonitor_AlterationException $e) {
+        } catch (AlterationException $e) {
         }
     }
 
@@ -258,7 +258,7 @@ class Stagehand_AlterationMonitor
      */
     protected function addEvent($event, $file)
     {
-        $this->eventQueue[] = new Stagehand_AlterationMonitor_Event($event, $file);
+        $this->eventQueue[] = new Event($event, $file);
     }
 
     // }}}
