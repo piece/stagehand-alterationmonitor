@@ -46,6 +46,10 @@ namespace Stagehand\AlterationMonitor;
  */
 class ResourceChangeEvent
 {
+    const EVENT_CREATED = 1;
+    const EVENT_CHANGED = 2;
+    const EVENT_REMOVED = 4;
+
     protected $file;
     protected $code;
 

@@ -51,9 +51,6 @@ use Symfony\Component\Finder\Finder;
 class AlterationMonitor
 {
     const SCAN_INTERVAL_MIN = 5;
-    const EVENT_CREATED = 1;
-    const EVENT_CHANGED = 2;
-    const EVENT_REMOVED = 4;
 
     protected $directories;
     protected $callback;
@@ -124,18 +121,18 @@ class AlterationMonitor
         }
 
         if (!array_key_exists($file, $this->previousElements)) {
-            $this->addEvent(self::EVENT_CREATED, $file);
+            $this->addEvent(ResourceChangeEvent::EVENT_CREATED, $file);
             return;
         }
 
         $isDirectory = is_dir($file);
         if ($this->currentElements[$file]['isDirectory'] != $isDirectory) {
-            $this->addEvent(self::EVENT_CHANGED, $file);
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
             return;
         }
 
         if ($this->previousElements[$file]['perms'] != $perms) {
-            $this->addEvent(self::EVENT_CHANGED, $file);
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
             return;
         }
 
@@ -149,7 +146,7 @@ class AlterationMonitor
         }
 
         if ($this->previousElements[$file]['mtime'] != $mtime) {
-            $this->addEvent(self::EVENT_CHANGED, $file);
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
             return;
         }
     }
@@ -182,7 +179,7 @@ class AlterationMonitor
                     reset($this->previousElements);
                     while (list($file, $stat) = each($this->previousElements)) {
                         if (!array_key_exists($file, $this->currentElements)) {
-                            $this->addEvent(self::EVENT_REMOVED, $file);
+                            $this->addEvent(ResourceChangeEvent::EVENT_REMOVED, $file);
                         }
                     }
                 }
