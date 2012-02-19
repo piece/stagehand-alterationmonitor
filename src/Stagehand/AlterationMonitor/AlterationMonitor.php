@@ -55,7 +55,7 @@ class AlterationMonitor
     protected $directories;
     protected $callback;
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
-    protected $isFirstTime = true;
+    protected $firstTime = true;
     protected $currentResources = array();
     protected $previousResources = array();
     protected $resourceChangeEvents = array();
@@ -101,7 +101,7 @@ class AlterationMonitor
             $this->currentResources[$resource]['mtime'] = filemtime($resource);
         }
 
-        if ($this->isFirstTime) {
+        if ($this->firstTime) {
             return;
         }
 
@@ -162,7 +162,7 @@ class AlterationMonitor
                     $this->scanInterval = $elapsedTime;
                 }
 
-                if (!$this->isFirstTime) {
+                if (!$this->firstTime) {
                     reset($this->previousResources);
                     while (list($resource, $stat) = each($this->previousResources)) {
                         if (!array_key_exists($resource, $this->currentResources)) {
@@ -173,7 +173,7 @@ class AlterationMonitor
 
                 $this->previousResources = $this->currentResources;
                 $this->currentResources = array();
-                $this->isFirstTime = false;
+                $this->firstTime = false;
 
                 if (count($this->resourceChangeEvents)) {
                     break;
