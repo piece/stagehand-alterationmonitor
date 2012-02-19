@@ -97,10 +97,11 @@ class AlterationMonitor
             throw new Exception();
         }
 
-        $this->currentElements[$resource] = array('perms' => $perms,
-                                              'mtime' => null,
-                                              'isDirectory' => is_dir($resource)
-                                              );
+        $this->currentElements[$resource] = array(
+            'perms' => $perms,
+            'mtime' => null,
+            'isDirectory' => is_dir($resource),
+        );
 
         if (!$this->currentElements[$resource]['isDirectory']) {
             $mtime = filemtime($resource);
@@ -115,37 +116,26 @@ class AlterationMonitor
             return;
         }
 
-        $perms = fileperms($resource);
-        if ($perms === false) {
-            throw new Exception();
-        }
-
         if (!array_key_exists($resource, $this->previousElements)) {
             $this->addEvent(ResourceChangeEvent::EVENT_CREATED, $resource);
             return;
         }
 
-        $isDirectory = is_dir($resource);
-        if ($this->currentElements[$resource]['isDirectory'] != $isDirectory) {
+        if ($this->currentElements[$resource]['isDirectory'] != $this->previousElements[$resource]['isDirectory']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($this->previousElements[$resource]['perms'] != $perms) {
+        if ($this->currentElements[$resource]['perms'] != $this->previousElements[$resource]['perms']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($isDirectory) {
+        if ($this->currentElements[$resource]['isDirectory']) {
             return;
         }
 
-        $mtime = filemtime($resource);
-        if ($mtime === false) {
-            throw new Exception();
-        }
-
-        if ($this->previousElements[$resource]['mtime'] != $mtime) {
+        if ($this->currentElements[$resource]['mtime'] > $this->previousElements[$resource]['mtime']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
