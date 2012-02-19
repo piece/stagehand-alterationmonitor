@@ -88,28 +88,17 @@ class AlterationMonitor
      * Detects any changes of a file or directory immediately.
      *
      * @param string $resource
-     * @throws \Stagehand\AlterationMonitor\Exception
      */
     public function detectChanges($resource)
     {
-        $perms = fileperms($resource);
-        if ($perms === false) {
-            throw new Exception();
-        }
-
         $this->currentResources[$resource] = array(
-            'perms' => $perms,
+            'perms' => fileperms($resource),
             'mtime' => null,
             'isDirectory' => is_dir($resource),
         );
 
         if (!$this->currentResources[$resource]['isDirectory']) {
-            $mtime = filemtime($resource);
-            if ($mtime === false) {
-                throw new Exception();
-            }
-
-            $this->currentResources[$resource]['mtime'] = $mtime;
+            $this->currentResources[$resource]['mtime'] = filemtime($resource);
         }
 
         if ($this->isFirstTime) {
@@ -144,9 +133,17 @@ class AlterationMonitor
     /**
      * Watches for changes in the target directories and returns immediately when
      * changes are detected.
+     *
+     * @throws \Exception
      */
     protected function waitForChanges()
     {
+        set_error_handler(function ($code, $message, $file, $line) {
+            if (error_reporting() & $code) {
+                throw new \ErrorException($message, 0, $code, $file, $line);
+            }
+        });
+
         try {
             while (true) {
                 sleep($this->scanInterval);
@@ -179,11 +176,15 @@ class AlterationMonitor
                 $this->isFirstTime = false;
 
                 if (count($this->resourceChangeEvents)) {
-                    throw new AlterationException();
+                    break;
                 }
             }
-        } catch (AlterationException $e) {
+        } catch (\Exception $e) {
+            restore_error_handler();
+            throw $e;
         }
+
+        restore_error_handler();
     }
 
     /**
