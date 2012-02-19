@@ -56,7 +56,7 @@ class AlterationMonitor
     protected $callback;
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
     protected $isFirstTime = true;
-    protected $currentElements = array();
+    protected $currentResources = array();
     protected $previousElements = array();
     protected $eventQueue = array();
 
@@ -97,19 +97,19 @@ class AlterationMonitor
             throw new Exception();
         }
 
-        $this->currentElements[$resource] = array(
+        $this->currentResources[$resource] = array(
             'perms' => $perms,
             'mtime' => null,
             'isDirectory' => is_dir($resource),
         );
 
-        if (!$this->currentElements[$resource]['isDirectory']) {
+        if (!$this->currentResources[$resource]['isDirectory']) {
             $mtime = filemtime($resource);
             if ($mtime === false) {
                 throw new Exception();
             }
 
-            $this->currentElements[$resource]['mtime'] = $mtime;
+            $this->currentResources[$resource]['mtime'] = $mtime;
         }
 
         if ($this->isFirstTime) {
@@ -121,21 +121,21 @@ class AlterationMonitor
             return;
         }
 
-        if ($this->currentElements[$resource]['isDirectory'] != $this->previousElements[$resource]['isDirectory']) {
+        if ($this->currentResources[$resource]['isDirectory'] != $this->previousElements[$resource]['isDirectory']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($this->currentElements[$resource]['perms'] != $this->previousElements[$resource]['perms']) {
+        if ($this->currentResources[$resource]['perms'] != $this->previousElements[$resource]['perms']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($this->currentElements[$resource]['isDirectory']) {
+        if ($this->currentResources[$resource]['isDirectory']) {
             return;
         }
 
-        if ($this->currentElements[$resource]['mtime'] > $this->previousElements[$resource]['mtime']) {
+        if ($this->currentResources[$resource]['mtime'] > $this->previousElements[$resource]['mtime']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
@@ -168,14 +168,14 @@ class AlterationMonitor
                 if (!$this->isFirstTime) {
                     reset($this->previousElements);
                     while (list($resource, $stat) = each($this->previousElements)) {
-                        if (!array_key_exists($resource, $this->currentElements)) {
+                        if (!array_key_exists($resource, $this->currentResources)) {
                             $this->addEvent(ResourceChangeEvent::EVENT_REMOVED, $resource);
                         }
                     }
                 }
 
-                $this->previousElements = $this->currentElements;
-                $this->currentElements = array();
+                $this->previousElements = $this->currentResources;
+                $this->currentResources = array();
                 $this->isFirstTime = false;
 
                 if (count($this->eventQueue)) {
