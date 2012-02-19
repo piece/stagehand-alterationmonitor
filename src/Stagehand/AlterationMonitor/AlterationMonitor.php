@@ -57,7 +57,7 @@ class AlterationMonitor
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
     protected $isFirstTime = true;
     protected $currentResources = array();
-    protected $previousElements = array();
+    protected $previousResources = array();
     protected $eventQueue = array();
 
     /**
@@ -116,17 +116,17 @@ class AlterationMonitor
             return;
         }
 
-        if (!array_key_exists($resource, $this->previousElements)) {
+        if (!array_key_exists($resource, $this->previousResources)) {
             $this->addEvent(ResourceChangeEvent::EVENT_CREATED, $resource);
             return;
         }
 
-        if ($this->currentResources[$resource]['isDirectory'] != $this->previousElements[$resource]['isDirectory']) {
+        if ($this->currentResources[$resource]['isDirectory'] != $this->previousResources[$resource]['isDirectory']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($this->currentResources[$resource]['perms'] != $this->previousElements[$resource]['perms']) {
+        if ($this->currentResources[$resource]['perms'] != $this->previousResources[$resource]['perms']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
@@ -135,7 +135,7 @@ class AlterationMonitor
             return;
         }
 
-        if ($this->currentResources[$resource]['mtime'] > $this->previousElements[$resource]['mtime']) {
+        if ($this->currentResources[$resource]['mtime'] > $this->previousResources[$resource]['mtime']) {
             $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
@@ -166,15 +166,15 @@ class AlterationMonitor
                 }
 
                 if (!$this->isFirstTime) {
-                    reset($this->previousElements);
-                    while (list($resource, $stat) = each($this->previousElements)) {
+                    reset($this->previousResources);
+                    while (list($resource, $stat) = each($this->previousResources)) {
                         if (!array_key_exists($resource, $this->currentResources)) {
                             $this->addEvent(ResourceChangeEvent::EVENT_REMOVED, $resource);
                         }
                     }
                 }
 
-                $this->previousElements = $this->currentResources;
+                $this->previousResources = $this->currentResources;
                 $this->currentResources = array();
                 $this->isFirstTime = false;
 
