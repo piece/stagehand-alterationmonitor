@@ -50,21 +50,24 @@ class ResourceChangeEvent
     const EVENT_CHANGED = 2;
     const EVENT_REMOVED = 4;
 
+    /**
+     * @var \SplFileInfo
+     */
     protected $resource;
     protected $code;
 
     /**
      * @param integer $code
-     * @param string  $resource
+     * @param \SplFileInfo $resource
      */
-    public function __construct($code, $resource)
+    public function __construct($code, \SplFileInfo $resource)
     {
         $this->resource = $resource;
         $this->code = $code;
     }
 
     /**
-     * @return string
+     * @return \SplFileInfo
      */
     public function getResource()
     {
