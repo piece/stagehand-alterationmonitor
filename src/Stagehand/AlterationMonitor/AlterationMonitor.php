@@ -87,52 +87,52 @@ class AlterationMonitor
     /**
      * Detects any changes of a file or directory immediately.
      *
-     * @param string $file
+     * @param string $resource
      * @throws \Stagehand\AlterationMonitor\Exception
      */
-    public function detectChanges($file)
+    public function detectChanges($resource)
     {
-        $perms = fileperms($file);
+        $perms = fileperms($resource);
         if ($perms === false) {
             throw new Exception();
         }
 
-        $this->currentElements[$file] = array('perms' => $perms,
+        $this->currentElements[$resource] = array('perms' => $perms,
                                               'mtime' => null,
-                                              'isDirectory' => is_dir($file)
+                                              'isDirectory' => is_dir($resource)
                                               );
 
-        if (!$this->currentElements[$file]['isDirectory']) {
-            $mtime = filemtime($file);
+        if (!$this->currentElements[$resource]['isDirectory']) {
+            $mtime = filemtime($resource);
             if ($mtime === false) {
                 throw new Exception();
             }
 
-            $this->currentElements[$file]['mtime'] = $mtime;
+            $this->currentElements[$resource]['mtime'] = $mtime;
         }
 
         if ($this->isFirstTime) {
             return;
         }
 
-        $perms = fileperms($file);
+        $perms = fileperms($resource);
         if ($perms === false) {
             throw new Exception();
         }
 
-        if (!array_key_exists($file, $this->previousElements)) {
-            $this->addEvent(ResourceChangeEvent::EVENT_CREATED, $file);
+        if (!array_key_exists($resource, $this->previousElements)) {
+            $this->addEvent(ResourceChangeEvent::EVENT_CREATED, $resource);
             return;
         }
 
-        $isDirectory = is_dir($file);
-        if ($this->currentElements[$file]['isDirectory'] != $isDirectory) {
-            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
+        $isDirectory = is_dir($resource);
+        if ($this->currentElements[$resource]['isDirectory'] != $isDirectory) {
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
-        if ($this->previousElements[$file]['perms'] != $perms) {
-            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
+        if ($this->previousElements[$resource]['perms'] != $perms) {
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
 
@@ -140,13 +140,13 @@ class AlterationMonitor
             return;
         }
 
-        $mtime = filemtime($file);
+        $mtime = filemtime($resource);
         if ($mtime === false) {
             throw new Exception();
         }
 
-        if ($this->previousElements[$file]['mtime'] != $mtime) {
-            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $file);
+        if ($this->previousElements[$resource]['mtime'] != $mtime) {
+            $this->addEvent(ResourceChangeEvent::EVENT_CHANGED, $resource);
             return;
         }
     }
@@ -165,8 +165,8 @@ class AlterationMonitor
                 $startTime = time();
                 foreach ($this->directories as $directory) {
                     $finder = Finder::create()->in($directory);
-                    foreach ($finder->getIterator() as $file) {
-                        $this->detectChanges($file->getPathname());
+                    foreach ($finder->getIterator() as $resource) {
+                        $this->detectChanges($resource->getPathname());
                     }
                 }
                 $endTime = time();
@@ -177,9 +177,9 @@ class AlterationMonitor
 
                 if (!$this->isFirstTime) {
                     reset($this->previousElements);
-                    while (list($file, $stat) = each($this->previousElements)) {
-                        if (!array_key_exists($file, $this->currentElements)) {
-                            $this->addEvent(ResourceChangeEvent::EVENT_REMOVED, $file);
+                    while (list($resource, $stat) = each($this->previousElements)) {
+                        if (!array_key_exists($resource, $this->currentElements)) {
+                            $this->addEvent(ResourceChangeEvent::EVENT_REMOVED, $resource);
                         }
                     }
                 }
@@ -198,11 +198,11 @@ class AlterationMonitor
 
     /**
      * @param integer $event
-     * @param string  $file
+     * @param string  $resource
      */
-    protected function addEvent($event, $file)
+    protected function addEvent($event, $resource)
     {
-        $this->eventQueue[] = new ResourceChangeEvent($event, $file);
+        $this->eventQueue[] = new ResourceChangeEvent($event, $resource);
     }
 
     /**

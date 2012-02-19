@@ -50,25 +50,25 @@ class ResourceChangeEvent
     const EVENT_CHANGED = 2;
     const EVENT_REMOVED = 4;
 
-    protected $file;
+    protected $resource;
     protected $code;
 
     /**
      * @param integer $code
-     * @param string  $file
+     * @param string  $resource
      */
-    public function __construct($code, $file)
+    public function __construct($code, $resource)
     {
-        $this->file = $file;
+        $this->resource = $resource;
         $this->code = $code;
     }
 
     /**
      * @return string
      */
-    public function getFile()
+    public function getResource()
     {
-        return $this->file;
+        return $this->resource;
     }
 
     /**
