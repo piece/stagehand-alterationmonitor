@@ -37,6 +37,8 @@
 
 namespace Stagehand\AlterationMonitor;
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * A file and directory alteration monitor.
  *
@@ -57,7 +59,6 @@ class AlterationMonitor
     protected $callback;
     protected $invokesCallbackForEachFile;
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
-    protected $directoryScanner;
     protected $isFirstTime = true;
     protected $currentElements = array();
     protected $previousElements = array();
@@ -78,8 +79,6 @@ class AlterationMonitor
         $this->directories = $directories;
         $this->callback = $callback;
         $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
-        $this->directoryScanner =
-            new \Stagehand_DirectoryScanner(array($this, 'detectChanges'));
     }
 
     /**
@@ -174,7 +173,10 @@ class AlterationMonitor
 
                 $startTime = time();
                 foreach ($this->directories as $directory) {
-                    $this->directoryScanner->scan($directory);
+                    $finder = Finder::create()->in($directory);
+                    foreach ($finder->getIterator() as $file) {
+                        $this->detectChanges($file->getPathname());
+                    }
                 }
                 $endTime = time();
                 $elapsedTime = $endTime - $startTime;
