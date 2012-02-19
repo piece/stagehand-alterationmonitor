@@ -57,7 +57,6 @@ class AlterationMonitor
 
     protected $directories;
     protected $callback;
-    protected $invokesCallbackForEachFile;
     protected $scanInterval = self::SCAN_INTERVAL_MIN;
     protected $isFirstTime = true;
     protected $currentElements = array();
@@ -69,16 +68,11 @@ class AlterationMonitor
      *
      * @param array    $directories
      * @param callback $callback
-     * @param boolean  $invokesCallbackForEachFile
      */
-    public function __construct($directories,
-                                $callback,
-                                $invokesCallbackForEachFile = false
-                                )
+    public function __construct($directories, $callback)
     {
         $this->directories = $directories;
         $this->callback = $callback;
-        $this->invokesCallbackForEachFile = $invokesCallbackForEachFile;
     }
 
     /**
@@ -218,14 +212,7 @@ class AlterationMonitor
      */
     protected function invokeCallback()
     {
-        if (!$this->invokesCallbackForEachFile) {
-            call_user_func($this->callback, $this->eventQueue);
-        } else {
-            foreach ($this->eventQueue as $event) {
-                call_user_func($this->callback, $event);
-            }
-        }
-
+        call_user_func($this->callback, $this->eventQueue);
         $this->eventQueue = array();
     }
 }
