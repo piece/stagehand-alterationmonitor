@@ -58,7 +58,7 @@ class AlterationMonitor
     protected $isFirstTime = true;
     protected $currentResources = array();
     protected $previousResources = array();
-    protected $eventQueue = array();
+    protected $resourceChangeEvents = array();
 
     /**
      * Sets one or more target directories and a callback to the properties.
@@ -178,7 +178,7 @@ class AlterationMonitor
                 $this->currentResources = array();
                 $this->isFirstTime = false;
 
-                if (count($this->eventQueue)) {
+                if (count($this->resourceChangeEvents)) {
                     throw new AlterationException();
                 }
             }
@@ -192,15 +192,15 @@ class AlterationMonitor
      */
     protected function addEvent($event, $resource)
     {
-        $this->eventQueue[] = new ResourceChangeEvent($event, new \SplFileInfo($resource));
+        $this->resourceChangeEvents[] = new ResourceChangeEvent($event, new \SplFileInfo($resource));
     }
 
     /**
      */
     protected function invokeCallback()
     {
-        call_user_func($this->callback, $this->eventQueue);
-        $this->eventQueue = array();
+        call_user_func($this->callback, $this->resourceChangeEvents);
+        $this->resourceChangeEvents = array();
     }
 }
 
