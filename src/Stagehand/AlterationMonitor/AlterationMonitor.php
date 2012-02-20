@@ -50,11 +50,9 @@ use Symfony\Component\Finder\Finder;
  */
 class AlterationMonitor
 {
-    const SCAN_INTERVAL_MIN = 5;
-
     protected $directories;
     protected $callback;
-    protected $scanInterval = self::SCAN_INTERVAL_MIN;
+    protected $scanInterval;
     protected $firstTime = true;
     protected $currentResources = array();
     protected $previousResources = array();
@@ -64,12 +62,14 @@ class AlterationMonitor
      * Sets one or more target directories and a callback to the properties.
      *
      * @param array    $directories
+     * @param integer $scanInterval
      * @param callback $callback
      */
-    public function __construct($directories, $callback)
+    public function __construct($directories, $scanInterval, $callback)
     {
         $this->directories = $directories;
         $this->callback = $callback;
+        $this->scanInterval = $scanInterval;
     }
 
     /**
@@ -146,20 +146,13 @@ class AlterationMonitor
 
         try {
             while (true) {
-                sleep($this->scanInterval);
                 clearstatcache();
 
-                $startTime = time();
                 foreach ($this->directories as $directory) {
                     $finder = Finder::create()->in($directory);
                     foreach ($finder->getIterator() as $resource) {
                         $this->detectChanges($resource->getPathname());
                     }
-                }
-                $endTime = time();
-                $elapsedTime = $endTime - $startTime;
-                if ($elapsedTime > self::SCAN_INTERVAL_MIN) {
-                    $this->scanInterval = $elapsedTime;
                 }
 
                 if (!$this->firstTime) {
@@ -178,6 +171,8 @@ class AlterationMonitor
                 if (count($this->resourceChangeEvents)) {
                     break;
                 }
+
+                usleep($this->scanInterval);
             }
         } catch (\Exception $e) {
             restore_error_handler();
