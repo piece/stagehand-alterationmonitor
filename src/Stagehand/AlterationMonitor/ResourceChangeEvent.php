@@ -54,16 +54,20 @@ class ResourceChangeEvent
      * @var \SplFileInfo
      */
     protected $resource;
-    protected $code;
 
     /**
-     * @param integer $code
+     * @var integer
+     */
+    protected $type;
+
+    /**
+     * @param integer $type
      * @param \SplFileInfo $resource
      */
-    public function __construct($code, \SplFileInfo $resource)
+    public function __construct($type, \SplFileInfo $resource)
     {
         $this->resource = $resource;
-        $this->code = $code;
+        $this->type = $type;
     }
 
     /**
@@ -75,11 +79,11 @@ class ResourceChangeEvent
     }
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getCode()
+    public function getType()
     {
-        return $this->code;
+        return $this->type;
     }
 }
 
