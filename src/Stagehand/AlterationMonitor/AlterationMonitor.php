@@ -148,11 +148,8 @@ class AlterationMonitor
             while (true) {
                 clearstatcache();
 
-                foreach ($this->directories as $directory) {
-                    $finder = Finder::create()->in($directory);
-                    foreach ($finder->getIterator() as $resource) {
-                        $this->detectChanges($resource->getPathname());
-                    }
+                foreach (Finder::create()->in($this->directories) as $resource) {
+                    $this->detectChanges($resource->getPathname());
                 }
 
                 if (!$this->firstTime) {
