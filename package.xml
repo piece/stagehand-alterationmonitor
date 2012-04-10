@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
  <name>Stagehand_AlterationMonitor</name>
  <channel>pear.piece-framework.com</channel>
  <summary>A file alteration monitor</summary>
- <description>Stagehand_AlterationMonitor provides a framework to monitor any changes in the specified directory.</description>
+ <description>Stagehand_AlterationMonitor provides a framework to monitor any changes in the specified directories.</description>
  <lead>
   <name>KUBO Atsuhiro</name>
   <user>iteman</user>
   <email>kubo@iteman.jp</email>
   <active>yes</active>
  </lead>
- <date>2010-09-10</date>
- <time>22:14:29</time>
+ <date>2012-04-10</date>
+ <time>22:03:40</time>
  <version>
-  <release>1.1.0</release>
-  <api>1.0.0</api>
+  <release>2.0.0</release>
+  <api>2.0.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -25,34 +25,49 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-The features of Stagehand_AlterationMonitor 1.1.0 is the same as Stagehand_AlterationMonitor 1.0.0 except the version number and the directory structure. As of this version, the sources are located directly under the &quot;php_dir&quot; (PEAR directory).
+What&apos;s New in Stagehand_AlterationMonitor 2.0.0
+
+Migration to PHP 5.3
+
+ (Issue #374)
+
+ Stagehand_AlterationMonitor has been migrated to PHP 5.3. As of this version, it only works with PHP 5.3.2+.
+
+Improved Scan Interval
+
+ (Issue #379)
+
+ A lot of improvements to scan interval have been made. http://piece-framework.com/issue/379 is the full list of improvements.
+
+Improved Event Object
+
+ (Issue #378)
+
+ The type of the event resource has been changed from string to SplFileInfo.
+
+Deprecated Functionality in Stagehand_AlterationMonitor 2.0.0
+
+ * The functionality that invokes the callback for each change event has been removed. (Issue #377)
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="58e136c57c700bf1055c7d67caf9656a" name="doc/LICENSE" role="doc" />
-   <file baseinstalldir="/" md5sum="a2472b9dc7e46e584686d76bf02a823b" name="Stagehand/AlterationMonitor.php" role="php" />
-   <file baseinstalldir="/" md5sum="7f9284696ea6ca9a041496fb97a36a23" name="Stagehand/AlterationMonitor/AlterationException.php" role="php" />
-   <file baseinstalldir="/" md5sum="db682f79efb05171bfce790e177822bf" name="Stagehand/AlterationMonitor/Event.php" role="php" />
-   <file baseinstalldir="/" md5sum="7fa3fed40ad6e49787cd9d21bc31b095" name="Stagehand/AlterationMonitor/Exception.php" role="php" />
+   <file baseinstalldir="/" md5sum="6535b15823d05f527895bae9ae7b68cf" name="doc/LICENSE" role="doc" />
+   <file baseinstalldir="/" md5sum="885f22c4da4605ae16ebc3b41ab502ca" name="Stagehand/AlterationMonitor/AlterationMonitor.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cacd07c88c808ac3f0eefd829fc7f68" name="Stagehand/AlterationMonitor/ResourceChangeEvent.php" role="php" />
   </dir>
  </contents>
  <dependencies>
   <required>
    <php>
-    <min>5.0.0</min>
+    <min>5.3.2</min>
    </php>
    <pearinstaller>
     <min>1.4.3</min>
    </pearinstaller>
    <package>
-    <name>Stagehand_DirectoryScanner</name>
-    <channel>pear.piece-framework.com</channel>
-    <min>1.0.0</min>
-   </package>
-   <package>
-    <name>Stagehand_Autoload</name>
-    <channel>pear.piece-framework.com</channel>
-    <min>0.3.0</min>
+    <name>Finder</name>
+    <channel>pear.symfony.com</channel>
+    <min>2.0.0</min>
    </package>
   </required>
  </dependencies>
@@ -86,6 +101,43 @@ The first release of Stagehand_AlterationMonitor.
    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
    <notes>
 The features of Stagehand_AlterationMonitor 1.1.0 is the same as Stagehand_AlterationMonitor 1.0.0 except the version number and the directory structure. As of this version, the sources are located directly under the &quot;php_dir&quot; (PEAR directory).
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.0.0</release>
+    <api>2.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-04-10</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+What&apos;s New in Stagehand_AlterationMonitor 2.0.0
+
+Migration to PHP 5.3
+
+ (Issue #374)
+
+ Stagehand_AlterationMonitor has been migrated to PHP 5.3. As of this version, it only works with PHP 5.3.2+.
+
+Improved Scan Interval
+
+ (Issue #379)
+
+ A lot of improvements to scan interval have been made. http://piece-framework.com/issue/379 is the full list of improvements.
+
+Improved Event Object
+
+ (Issue #378)
+
+ The type of the event resource has been changed from string to SplFileInfo.
+
+Deprecated Functionality in Stagehand_AlterationMonitor 2.0.0
+
+ * The functionality that invokes the callback for each change event has been removed. (Issue #377)
    </notes>
   </release>
  </changelog>
