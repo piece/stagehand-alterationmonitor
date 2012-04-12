@@ -91,15 +91,23 @@ class AlterationMonitor
      */
     public function detectChanges($resource)
     {
-        $this->currentResources[$resource] = array(
-            'perms' => fileperms($resource),
-            'mtime' => null,
-            'isDirectory' => is_dir($resource),
-        );
-
-        if (!$this->currentResources[$resource]['isDirectory']) {
-            $this->currentResources[$resource]['mtime'] = filemtime($resource);
+        try {
+            $perms = fileperms($resource);
+            $isDirectory = is_dir($resource);
+            if (!$isDirectory) {
+                $mtime = filemtime($resource);
+            } else {
+                $mtime = null;
+            }
+        } catch (\ErrorException $e) {
+            return;
         }
+
+        $this->currentResources[$resource] = array(
+            'perms' => $perms,
+            'mtime' => $mtime,
+            'isDirectory' => $isDirectory
+        );
 
         if ($this->firstTime) {
             return;
