@@ -13,10 +13,10 @@
   <email>kubo@iteman.jp</email>
   <active>yes</active>
  </lead>
- <date>2012-04-10</date>
- <time>22:03:40</time>
+ <date>2012-04-12</date>
+ <time>13:02:41</time>
  <version>
-  <release>2.0.0</release>
+  <release>2.0.1</release>
   <api>2.0.0</api>
  </version>
  <stability>
@@ -25,35 +25,19 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-What&apos;s New in Stagehand_AlterationMonitor 2.0.0
+What&apos;s New in Stagehand_AlterationMonitor 2.0.1
 
-Migration to PHP 5.3
+A Defect Fix
 
- (Issue #374)
+ The following defect has been fixed:
 
- Stagehand_AlterationMonitor has been migrated to PHP 5.3. As of this version, it only works with PHP 5.3.2+.
-
-Improved Scan Interval
-
- (Issue #379)
-
- A lot of improvements to scan interval have been made. http://piece-framework.com/issue/379 is the full list of improvements.
-
-Improved Event Object
-
- (Issue #378)
-
- The type of the event resource has been changed from string to SplFileInfo.
-
-Deprecated Functionality in Stagehand_AlterationMonitor 2.0.0
-
- * The functionality that invokes the callback for each change event has been removed. (Issue #377)
+ * An ErrorException is raised when the fileperms() function call is failed. (Issue #382)
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="6535b15823d05f527895bae9ae7b68cf" name="doc/LICENSE" role="doc" />
-   <file baseinstalldir="/" md5sum="885f22c4da4605ae16ebc3b41ab502ca" name="Stagehand/AlterationMonitor/AlterationMonitor.php" role="php" />
-   <file baseinstalldir="/" md5sum="9cacd07c88c808ac3f0eefd829fc7f68" name="Stagehand/AlterationMonitor/ResourceChangeEvent.php" role="php" />
+   <file baseinstalldir="/" md5sum="0fc9e1caa48fc68306155bd12d5d8e56" name="Stagehand/AlterationMonitor/AlterationMonitor.php" role="php" />
+   <file baseinstalldir="/" md5sum="3f9a22317899e8577f8f1258b81d18e9" name="Stagehand/AlterationMonitor/ResourceChangeEvent.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -138,6 +122,27 @@ Improved Event Object
 Deprecated Functionality in Stagehand_AlterationMonitor 2.0.0
 
  * The functionality that invokes the callback for each change event has been removed. (Issue #377)
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.0.1</release>
+    <api>2.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-04-12</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+What&apos;s New in Stagehand_AlterationMonitor 2.0.1
+
+A Defect Fix
+
+ The following defect has been fixed:
+
+ * An ErrorException is raised when the fileperms() function call is failed. (Issue #382)
    </notes>
   </release>
  </changelog>

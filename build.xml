@@ -27,33 +27,17 @@
 <project name="Stagehand_AlterationMonitor" basedir="." default="build">
   <taskdef classname="phing.tasks.ext.d51PearPkg2Task" name="d51pearpkg2"/>
 
-  <property name="package.releaseversion">2.0.0</property>
+  <property name="package.releaseversion">2.0.1</property>
   <property name="package.releasestability">stable</property>
   <property name="package.apiversion">2.0.0</property>
   <property name="package.apistability">stable</property>
   <property name="package.notes"><![CDATA[What's New in ${phing.project.name} ${package.releaseversion}
 
-Migration to PHP 5.3
+A Defect Fix
 
- (Issue #374)
+ The following defect has been fixed:
 
- Stagehand_AlterationMonitor has been migrated to PHP 5.3. As of this version, it only works with PHP 5.3.2+.
-
-Improved Scan Interval
-
- (Issue #379)
-
- A lot of improvements to scan interval have been made. http://piece-framework.com/issue/379 is the full list of improvements.
-
-Improved Event Object
-
- (Issue #378)
-
- The type of the event resource has been changed from string to SplFileInfo.
-
-Deprecated Functionality in Stagehand_AlterationMonitor 2.0.0
-
- * The functionality that invokes the callback for each change event has been removed. (Issue #377)
+ * An ErrorException is raised when the fileperms() function call is failed. (Issue #382)
 ]]></property>
   <property name="package.name">${phing.project.name}</property>
   <property name="package.summary">A file alteration monitor</property>
