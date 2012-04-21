@@ -13,9 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2"
-    },
-    "recommend": {
+        "php": ">=5.3.2",
         "symfony/finder": ">=2.0.0"
     },
     "autoload": {
