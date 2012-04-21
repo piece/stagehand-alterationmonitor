@@ -4,7 +4,7 @@
     "description": "A file alteration monitor",
     "keywords": ["alteration monitoring"],
     "homepage": "http://redmine.piece-framework.com/projects/stagehand-componentfactory",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "BSD-2",
     "authors": [
         {
